@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>GuitarStore</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <link rel="icon" href="image/applie-touch-icon.png"/>
+
+    <!--DataTable-->
+    <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({selector:'textarea'});</script>
+</head>
+
+<body>
+<style>.navbar-default {
+    background-color: #a32222;
+    border-color: #293872;
+}
+
+.navbar-default .navbar-brand {
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #f8f9f8;
+}
+
+.navbar-default .navbar-text {
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #f8f9f8;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #f8f9f8;
+    background-color: #293872;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #f8f9f8;
+    background-color: #293872;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #293872;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #293872;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #ecf0f1;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color: #ecf0f1;
+}
+
+.navbar-default .navbar-link {
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-link:hover {
+    color: #f8f9f8;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #f8f9f8;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #f8f9f8;
+        background-color: #293872;
+    }
+}</style>
+<div>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">Admin Portal</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                            data-toggle="dropdown" role="button" aria-haspopup="true"
+                                            aria-expanded="false">Guitar <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/guitar/add}">Add a new guitar</a></li>
+                            <li><a th:href="@{/guitar/guitarList}">View guitar list</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/logout}">Sign out</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</div>
+<div class="container">
+    <div class="row">
+        <form class="form-horizontal" th:action="@{/guitar/updateGuitar}" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <legend class="center-block">Update Guitar Information<span style="font-size:small"> * is a required field</span>
+                </legend>
+
+                <input hidden="hidden" name="id" th:value="${guitar.id}"/>
+                <!-- name -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="name">* Name</label>
+                    <div class="col-md-8">
+                        <input
+                                type="text" class="form-control" id="name" th:value="${guitar.name}" required="required"
+                                placeholder="Name" name="name"/>
+                        <span class="help-block">Title of the book</span>
+                    </div>
+                </div>
+
+                <!-- model -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="model">* Model</label>
+                    <div class="col-md-8">
+                        <input
+                                type="text" class="form-control" id="model" th:value="${guitar.model}"
+                                required="required"
+                                placeholder="Model" name="model"/>
+                        <span class="help-block">Model of the guitar</span>
+                    </div>
+                </div>
+
+                <!-- company -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="company">Company</label>
+                    <div class="col-md-8">
+                        <input
+                                type="text" class="form-control" id="company" th:value="${guitar.company}"
+                                placeholder="Company" name="company"/>
+                        <span class="help-block">Company of the guitar</span>
+                    </div>
+                </div>
+
+                <!-- category -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="category">* Category</label>
+                    <div class="col-md-8">
+                        <select th:value="${guitar.category}" id="category" class="form-control" name="category">
+                            <option value="" selected="selected" disabled="disabled">Please select an option...</option>
+                            <option value="Acoustic" th:selected="(${guitar.category}=='Acoustic')">Acoustic</option>
+                            <option value="Electric" th:selected="(${guitar.category}=='Electric')">Electric</option>
+                            <option value="Bass" th:selected="(${guitar.category}=='Bass')">Bass</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- shipping weight -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="shippingWeight">Shipping
+                        Weight</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input th:value="${guitar.shippingWeight}" type="number" name="shippingWeight" step="0.01"
+                                   class="form-control" id="shippingWeight"
+                                   placeholder="Shipping Weight"/>
+                            <span class="input-group-addon">Kgs</span>
+                        </div>
+                        <span class="help-block">Shipping Weight of the guitar</span>
+                    </div>
+                </div>
+
+                <!-- list price -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="listPrice">List Price</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input th:value="${guitar.listPrice}" type="number" name="listPrice" step="0.01"
+                                   class="form-control" id="listPrice"
+                                   placeholder="List Price"/>
+                        </div>
+                        <span class="help-block">List price of the guitar</span>
+                    </div>
+                </div>
+
+                <!-- our price -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="ourPrice">Our Price</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input th:value="${guitar.ourPrice}" type="number" name="ourPrice" step="0.01"
+                                   class="form-control" id="ourPrice"
+                                   placeholder="Our Price"/>
+                        </div>
+                        <span class="help-block">Our price of the guitar</span>
+                    </div>
+                </div>
+
+                <!-- in stock number -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inStockNumber">Number in stock</label>
+                    <div class="col-md-8">
+                        <input th:value="${guitar.inStockNumber}" type="number" name="inStockNumber"
+                               class="form-control" id="inStockNumber"
+                               placeholder="Number of in-stock"/>
+                        <span class="help-block">Number of in-stock</span>
+                    </div>
+                </div>
+
+                <!-- status of guitar -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="status">Status</label>
+                    <div class="col-md-8">
+                        <label><input value="true" type="radio" name="active" th:checked="${guitar.active}"/> Active </label>
+                        <label><input value="false" type="radio" name="active" th:checked="${!guitar.active}"/> Inactive </label>
+                        <span class="help-block">Whether the guitar is active or inactive</span>
+                    </div>
+                </div>
+
+                <!-- description -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="description">Description</label>
+                    <div class="col-md-8">
+                    <textarea name="description" rows="5"
+                              class="form-control" id="description" th:value="${guitar.description}"
+                              th:text="${guitar.description}"
+                              placeholder="Description"></textarea> <span
+                            class="help-block">Description of the guitar</span>
+                    </div>
+                </div>
+
+                <!-- upload image -->
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label for="guitarImage">Upload book image</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input id="guitarImage" type="file" name="guitarImage" th:value="${guitar.guitarImage}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-success">Update Guitar</button>
+                        <a class="btn btn-danger" th:href="@{/guitar/guitarInfo(id=${guitar.id})}">Cancel</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootbox.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+
+<!--data tables-->
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+
+</body>
+</html>
